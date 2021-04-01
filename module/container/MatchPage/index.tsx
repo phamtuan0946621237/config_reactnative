@@ -1,14 +1,14 @@
 import React,{memo, useEffect} from 'react';
 import { Text, TouchableOpacity, View ,FlatList} from 'react-native';
-import { MacthRoute } from '../../../navigation';
+// import { MacthRoute } from '../../navigation';
 import { connect, useDispatch } from 'react-redux';
 import ListMatchComponent from './component/ListMatchComponent'
-import {matchAction} from '../../../redux/action/match'
+import {matchAction} from '../../redux/action/match'
 import {
     useFocusEffect,
     useNavigation,
   } from '@react-navigation/native';
-
+import { showLoading, dismissLoading } from '../../utils';
 const MatchPage = (props : any) => {
     //variable
     const { macthResponse } = props
@@ -16,13 +16,20 @@ const MatchPage = (props : any) => {
     const navigation = useNavigation();
     // life cycle
     useEffect(() => {
+        // setTimeout(() => {
+            showLoading()
+            setTimeout(() => {
+                dismissLoading()
+            },1000)
+        // },100)
+        
         dispatch(matchAction({date : "20210224",sortOnClient : true}))
         return () => {};
     },[])
 
     useEffect(() => {
         console.log("macthResponse",macthResponse)
-        
+        // dismissLoading()
     },[macthResponse])
 
     return (
